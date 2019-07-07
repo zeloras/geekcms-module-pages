@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Pages\Providers;
+namespace GeekCms\Pages\Providers;
 
 use GeekCms\PackagesManager\Support\ServiceProvider as MainServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Modules\Pages\Models\Block;
+use GeekCms\Pages\Models\Block;
 
 /**
  * Class InitServiceProvider.

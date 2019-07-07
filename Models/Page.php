@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Pages\Models;
+namespace GeekCms\Pages\Models;
 
 use Illuminate\Support\Facades\Blade;
-use Modules\Pages\Models\db\Page as DBModel;
+use GeekCms\Pages\Models\db\Page as DBModel;
 use Ponich\Eloquent\Traits\VirtualAttribute;
 
 class Page extends DBModel

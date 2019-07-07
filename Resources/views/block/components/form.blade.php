@@ -6,13 +6,13 @@
             <div class="row">
                 @if (isset($block) && empty($block->parent_id))
                 <div class="form-group col-12">
-                    <label for="name">{{ \Translate::get('pages::admin/main.list.block.page_block_name') }}:</label>
+                    <label for="name">{{ \Translate::get('module_pages::admin/main.list.block.page_block_name') }}:</label>
                     <input class="form-control" id="name" name="name" value="{{ old('name',$block->name ?? '') }}">
                 </div>
                 @endif
 
                 <div class="form-group col-6">
-                    <label for="lang">{{ \Translate::get('pages::admin/main.form.lang') }}:</label>
+                    <label for="lang">{{ \Translate::get('module_pages::admin/main.form.lang') }}:</label>
                     <select class="form-control" id="lang" name="lang" required>
                         @foreach($locales as $locale => $lang)
                             <?php
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="form-group col-6">
-                    <label for="parent_id">{{ \Translate::get('pages::admin/main.form.category') }}:</label>
+                    <label for="parent_id">{{ \Translate::get('module_pages::admin/main.form.category') }}:</label>
                     <select class="form-control" id="parent_id" name="parent_id">
                         <option></option>
                         @foreach($blocks_list as $blockItem)
@@ -48,7 +48,7 @@
 
 
                 <div class="form-group col-12">
-                    <label for="content">{{ \Translate::get('pages::admin/main.list.block.page_table_content') }}:</label>
+                    <label for="content">{{ \Translate::get('module_pages::admin/main.list.block.page_table_content') }}:</label>
                     @component('pages::page.components.wysiwyg')
                         @slot('name', 'content')
                         @slot('id', 'content')
@@ -66,17 +66,17 @@
                         <th></th>
                         <th>
                             <span class="form-text text-muted">
-                                {{ \Translate::get('pages::admin/main.list.block.variable_key_help') }}
+                                {{ \Translate::get('module_pages::admin/main.list.block.variable_key_help') }}
                             </span>
                         </th>
                         <th>
                             <span class="form-text text-muted">
-                                {{ \Translate::get('pages::admin/main.list.block.variable_type_help') }}
+                                {{ \Translate::get('module_pages::admin/main.list.block.variable_type_help') }}
                             </span>
                         </th>
                         <th>
                             <span class="form-text text-muted">
-                                {{ \Translate::get('pages::admin/main.list.block.variable_value_help') }}
+                                {{ \Translate::get('module_pages::admin/main.list.block.variable_value_help') }}
                             </span>
                         </th>
                         <th class="table-icon-cell table-actions"></th>
@@ -86,11 +86,11 @@
                     <tr id="variableRow0" class="pageblocks-container__line">
                         <th scope="row"></th>
                         <td>
-                            <input data-key="key" name="variable[key][]" type="text" class="form-control" placeholder="{{ \Translate::get('pages::admin/main.list.block.variable_key_help') }}">
+                            <input data-key="key" name="variable[key][]" type="text" class="form-control" placeholder="{{ \Translate::get('module_pages::admin/main.list.block.variable_key_help') }}">
                         </td>
                         <td>
                             <select data-key="type" name="variable[type][]" class="form-control">
-                                @inject('variableModel','Modules\Pages\Models\Variable')
+                                @inject('variableModel','GeekCms\Pages\Models\Variable')
                                 @if(isset($variableModel::$types))
                                     @foreach($variableModel::$types as $variableType)
                                         <option value="{{ $variableType }}">
@@ -102,14 +102,14 @@
                             </select>
                         </td>
                         <td>
-                            <input data-key="value"  type="text" name="variable[value][]"  class="form-control"  placeholder="{{ \Translate::get('pages::admin/main.list.block.variable_value_help') }}">
+                            <input data-key="value"  type="text" name="variable[value][]"  class="form-control"  placeholder="{{ \Translate::get('module_pages::admin/main.list.block.variable_value_help') }}">
                         </td>
                         <td>
                             <input data-key="uid" name="variable[uid][]" type="hidden" value="">
-                            <button type="button" data-action="{{ route('admin.pages.blocks.var_delete', ['var' => null]) }}" class="btn btn-primary pageblocks-container-remove" title="{{ \Translate::get('pages::admin/main.list.block.page_delete_variable') }}">
+                            <button type="button" data-action="{{ route('admin.pages.blocks.var_delete', ['var' => null]) }}" class="btn btn-primary pageblocks-container-remove" title="{{ \Translate::get('module_pages::admin/main.list.block.page_delete_variable') }}">
                                 <i class="fa fa-minus-circle"></i>
                             </button>
-                            <button data-key="create" type="button" class="btn btn-success pageblocks-container-add" title="{{ \Translate::get('pages::admin/main.list.block.page_create_variable') }}">
+                            <button data-key="create" type="button" class="btn btn-success pageblocks-container-add" title="{{ \Translate::get('module_pages::admin/main.list.block.page_create_variable') }}">
                                 <i class="fa fa-plus-circle"></i>
                             </button>
                         </td>
@@ -121,9 +121,9 @@
     <div class="form-group text-center pt-3">
         <button type="submit" class="btn btn-primary">
             @if(isset($block))
-                {{ \Translate::get('pages::admin/main.form.action_block_save') }}
+                {{ \Translate::get('module_pages::admin/main.form.action_block_save') }}
             @else
-                {{ \Translate::get('pages::admin/main.form.action_block_create') }}
+                {{ \Translate::get('module_pages::admin/main.form.action_block_create') }}
             @endif
         </button>
     </div>

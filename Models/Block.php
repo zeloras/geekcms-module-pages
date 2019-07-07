@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Pages\Models;
+namespace GeekCms\Pages\Models;
 
 use App\Models\MainModel;
-use Modules\Pages\Models\db\Block as DBModel;
+use GeekCms\Pages\Models\db\Block as DBModel;
 
 class Block extends DBModel
 {

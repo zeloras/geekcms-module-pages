@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Pages\Listeners;
+namespace GeekCms\Pages\Listeners;
 
 use App\Listeners\MainListener;
 use GeekCms\PackagesManager\Events\ModulesEvent;
@@ -17,7 +17,7 @@ class ModulesListener extends MainListener
     {
         // localize
         \Route::group(['prefix' => \LaravelLocalization::setLocale()], function () {
-            \Route::get('/{page?}', 'Modules\Pages\Http\Controllers\PageController@open')
+            \Route::get('/{page?}', 'GeekCms\Pages\Http\Controllers\PageController@open')
                 ->where(['page' => '[a-zA-Z\\/0-9]+'])
                 ->name('page.open')
             ;

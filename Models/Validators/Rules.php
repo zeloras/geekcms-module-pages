@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Pages\Models\Validators;
+namespace GeekCms\Pages\Models\Validators;
 
 use Illuminate\Validation\Validator;
-use Modules\Pages\Models\Page;
+use GeekCms\Pages\Models\Page;
 
 class Rules extends Validator
 {

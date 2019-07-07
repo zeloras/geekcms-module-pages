@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Pages\Providers;
+namespace GeekCms\Pages\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,7 +13,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'GeekCms\PackagesManager\Events\ModulesEvent' => [
-            'Modules\Pages\Listeners\ModulesListener',
+            'GeekCms\Pages\Listeners\ModulesListener',
         ],
     ];
 }

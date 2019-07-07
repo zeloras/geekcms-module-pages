@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Pages\Http\Controllers;
+namespace GeekCms\Pages\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Pages\Models\Block;
-use Modules\Pages\Models\Variable;
+use GeekCms\Pages\Models\Block;
+use GeekCms\Pages\Models\Variable;
 
 class AdminBlockController extends Controller
 {

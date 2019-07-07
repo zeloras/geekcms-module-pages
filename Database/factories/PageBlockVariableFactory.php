@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(Modules\Pages\Models\Variable::class, function (Faker $faker) {
+$factory->define(GeekCms\Pages\Models\Variable::class, function (Faker $faker) {
     return [
     ];
 });

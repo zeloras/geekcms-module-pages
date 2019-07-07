@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Pages\Models;
+namespace GeekCms\Pages\Models;
 
-use Modules\Pages\Models\db\Variable as DBModel;
+use GeekCms\Pages\Models\db\Variable as DBModel;
 
 class Variable extends DBModel
 {

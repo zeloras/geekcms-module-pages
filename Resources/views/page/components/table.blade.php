@@ -3,16 +3,16 @@
         <tr>
             <th class="table-check"></th>
             <th class="table-title">
-                {{ \Translate::get('pages::admin/main.list.title') }}
+                {{ \Translate::get('module_pages::admin/main.list.title') }}
             </th>
             <th>
-                {{ \Translate::get('pages::admin/main.list.languages') }}
+                {{ \Translate::get('module_pages::admin/main.list.languages') }}
             </th>
             <th>
-                {{ \Translate::get('pages::admin/main.list.type') }}
+                {{ \Translate::get('module_pages::admin/main.list.type') }}
             </th>
             <th>
-                {{ \Translate::get('pages::admin/main.list.updated') }}
+                {{ \Translate::get('module_pages::admin/main.list.updated') }}
             </th>
             <th class="table-icon-cell table-actions"></th>
         </tr>
@@ -32,7 +32,7 @@
                         {{ $page->name }}
                     </a>
                     @if ($default_slug === $page->slug)
-                        <span class="label label-pill label-primary">{{ \Translate::get('pages::admin/main.list.main_page') }}</span>
+                        <span class="label label-pill label-primary">{{ \Translate::get('module_pages::admin/main.list.main_page') }}</span>
                     @endif
                 </div>
             </td>
@@ -47,7 +47,7 @@
                             <li class="nav-item">
                                 <a class="btn-square-icon nav-link"
                                    data-toggle="tooltip" data-placement="left"
-                                   data-original-title="{{ \Translate::get('pages::admin/main.list.action_topage') }}: {{ $url }}"
+                                   data-original-title="{{ \Translate::get('module_pages::admin/main.list.action_topage') }}: {{ $url }}"
                                    href="{{ $url }}" target="_blank">
                                     <span class="flag-icon flag-icon-{{$locale}}"></span>
                                     {{ $langue }}
@@ -68,21 +68,21 @@
                 @php($url_current = route('page.open', ['page' => $page->slug]))
                 <a href="{{ $url_current }}"
                    data-toggle="tooltip" data-placement="left"
-                   data-original-title="{{ \Translate::get('pages::admin/main.list.action_topage') }}: {{$url_current}}"
+                   data-original-title="{{ \Translate::get('module_pages::admin/main.list.action_topage') }}: {{$url_current}}"
                    class="btn-link btn btn-success-outline btn-sm">
                     <i class="fa fa-globe"></i>
                 </a>
                 <a href="{{ route('admin.pages.edit', ['page' => $page->id]) }}"
                    data-toggle="tooltip" data-placement="left"
-                   data-original-title="{{ \Translate::get('pages::admin/main.list.action_edit') }}"
+                   data-original-title="{{ \Translate::get('module_pages::admin/main.list.action_edit') }}"
                    class="btn-link btn btn-success-outline btn-sm">
                     <i class="fa fa-edit"></i>
                 </a>
                 <a href="{{ route('admin.pages.delete', ['page' => $page->id]) }}"
                    data-toggle="tooltip" data-placement="left"
-                   data-original-title="{{ \Translate::get('pages::admin/main.list.action_delete') }}"
+                   data-original-title="{{ \Translate::get('module_pages::admin/main.list.action_delete') }}"
                    class="btn-link btn btn-success-outline btn-sm"
-                   data-delete="{{ \Translate::get('pages::admin/main.list.action_delete_confirm') }}">
+                   data-delete="{{ \Translate::get('module_pages::admin/main.list.action_delete_confirm') }}">
                     <i class="fa fa-trash"></i>
                 </a>
             </td>

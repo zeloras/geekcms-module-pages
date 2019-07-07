@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Pages\Models\db;
+namespace GeekCms\Pages\Models\db;
 
 use App\Models\MainModel;
 use Illuminate\Validation\Rule;
-use Modules\Pages\Models\Block as MainBlockModel;
-use Modules\Pages\Models\Variable;
+use GeekCms\Pages\Models\Block as MainBlockModel;
+use GeekCms\Pages\Models\Variable;
 
 class Block extends MainModel
 {

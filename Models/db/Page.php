@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Pages\Models\db;
+namespace GeekCms\Pages\Models\db;
 
 use App\Models\MainModel;
 use Illuminate\Validation\Rule;
-use Modules\Pages\Models\Assigns;
-use Modules\Pages\Models\Block;
-use Modules\Pages\Models\Page as MainPageModel;
+use GeekCms\Pages\Models\Assigns;
+use GeekCms\Pages\Models\Block;
+use GeekCms\Pages\Models\Page as MainPageModel;
 
 class Page extends MainModel
 {
@@ -83,8 +83,8 @@ class Page extends MainModel
      */
     public function fill(array $attributes)
     {
-        $this->messages = ['*.check_slug' => \Translate::get('pages::admin/validate.check_slug')];
-        $this->messages = ['*.translate_page' => \Translate::get('pages::admin/validate.check_translate_duplicate')];
+        $this->messages = ['*.check_slug' => \Translate::get('module_pages::admin/validate.check_slug')];
+        $this->messages = ['*.translate_page' => \Translate::get('module_pages::admin/validate.check_translate_duplicate')];
         $this->rules['type'][] = Rule::in(self::$types);
 
         return parent::fill($attributes);

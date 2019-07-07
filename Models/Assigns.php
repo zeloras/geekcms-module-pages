@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Pages\Models;
+namespace GeekCms\Pages\Models;
 
 use App\Models\MainModel;
-use Modules\Pages\Models\db\Assigns as DBModel;
+use GeekCms\Pages\Models\db\Assigns as DBModel;
 
 class Assigns extends DBModel
 {

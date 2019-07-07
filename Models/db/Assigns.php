@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Pages\Models\db;
+namespace GeekCms\Pages\Models\db;
 
 use App\Models\MainModel;
-use Modules\Pages\Models\Block;
+use GeekCms\Pages\Models\Block;
 
 class Assigns extends MainModel
 {

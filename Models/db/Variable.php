@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Pages\Models\db;
+namespace GeekCms\Pages\Models\db;
 
 use App\Models\MainModel;
-use Modules\Pages\Models\Assigns;
-use Modules\Pages\Models\Block;
-use Modules\Pages\Models\Page;
+use GeekCms\Pages\Models\Assigns;
+use GeekCms\Pages\Models\Block;
+use GeekCms\Pages\Models\Page;
 
 class Variable extends MainModel
 {

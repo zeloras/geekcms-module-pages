@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Pages\Database\Seeders;
+namespace GeekCms\Pages\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Pages\Models\Page;
+use GeekCms\Pages\Models\Page;
 
 class PagesDatabaseSeeder extends Seeder
 {

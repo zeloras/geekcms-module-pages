@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Pages\Http\Requests;
+namespace GeekCms\Pages\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
