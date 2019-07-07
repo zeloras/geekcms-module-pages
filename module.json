@@ -1,0 +1,69 @@
+{
+    "name": "Pages",
+    "alias": "pages",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 1,
+    "providers": [
+        "Modules\\Pages\\Providers\\InitServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "loader.php"
+    ],
+    "requires": [
+        "GeekCms\\PackagesManager"
+    ],
+    "access_permissions": [
+        {
+            "name": "modules_pages_admin_pages_list",
+            "i18n_name": "access.modules_pages_admin_pages_list"
+        },
+        {
+            "name": "modules_pages_admin_pages_edit",
+            "i18n_name": "access.modules_pages_admin_pages_edit"
+        },
+        {
+            "name": "modules_pages_admin_pages_create",
+            "i18n_name": "access.modules_pages_admin_pages_create"
+        },
+        {
+            "name": "modules_pages_admin_pages_delete",
+            "i18n_name": "access.modules_pages_admin_pages_delete"
+        },
+        {
+            "name": "modules_pages_admin_blocks_list",
+            "i18n_name": "access.modules_pages_admin_blocks_list"
+        },
+        {
+            "name": "modules_pages_admin_blocks_edit",
+            "i18n_name": "access.modules_pages_admin_blocks_edit"
+        },
+        {
+            "name": "modules_pages_admin_blocks_create",
+            "i18n_name": "access.modules_pages_admin_blocks_create"
+        },
+        {
+            "name": "modules_pages_admin_blocks_delete",
+            "i18n_name": "access.modules_pages_admin_blocks_delete"
+        }
+    ],
+    "menu_sidebar": [{
+        "i18n_name": null,
+        "route": null,
+        "icon": "font-icon font-icon-page",
+        "child": [
+            {
+                "route": "pages",
+                "i18n_name": "admin/sidenav.sub_list",
+                "icon": "font-icon font-icon-view-rows"
+            },
+            {
+                "route": "pages.blocks",
+                "i18n_name": "admin/sidenav.blocks",
+                "icon": "font-icon font-icon-widget"
+            }
+        ]
+    }]
+}

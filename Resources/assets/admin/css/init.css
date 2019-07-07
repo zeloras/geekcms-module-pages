@@ -1,0 +1,48 @@
+.pages-tabs-lang .active {
+    border-bottom: 4px solid red;
+}
+
+.page-blocks-sortable {
+    border: 1px dashed rgba(0,0,0, 0.5);
+    padding: 10px 10px 5px 10px;
+    margin-top: 10px;
+}
+
+.page-blocks-item {
+    border: 1px solid rgba(0,0,0, 0.3);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: grabbing;
+}
+
+.page-blocks-item:after {
+    content: none;
+}
+
+.page-blocks-item.main_block .dropdown {
+    display: none;
+}
+
+.page-blocks-item .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.page-blocks-item .card-header .card-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: normal;
+    width: 85%;
+}
+
+.page-blocks-item .checkbox-toggle {
+    margin: 0;
+    padding: 3px 0 0 0;
+}
+
+.page-blocks-item .card-block {
+    display: none;
+}
