@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'permission:admin_access'], 'prefix' => getAdminPrefix('pages')], function () {
+Route::group(['middleware' => ['web', 'permission:' . \Gcms::MAIN_ADMIN_PERMISSION], 'prefix' => getAdminPrefix('pages')], function () {
     Route::group(['middleware' => ['permission:modules_pages_admin_pages_list']], function () {
         Route::get('/', 'GeekCms\Pages\Http\Controllers\AdminController@index')
             ->name('admin.pages')
