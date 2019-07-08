@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => ['web', 'permission:' . \Gcms::MAIN_ADMIN_PERMISSION], 'prefix' => getAdminPrefix('pages')], function () {
     Route::group(['middleware' => ['permission:modules_pages_admin_pages_list']], function () {
-        Route::get('/', 'GeekCms\Pages\Http\Controllers\AdminController@index')
+        Route::get(DIRECTORY_SEPARATOR, 'GeekCms\Pages\Http\Controllers\AdminController@index')
             ->name('admin.pages')
         ;
     });
@@ -36,7 +36,7 @@ Route::group(['middleware' => ['web', 'permission:' . \Gcms::MAIN_ADMIN_PERMISSI
     // blocks
     Route::group(['prefix' => 'blocks'], function () {
         Route::group(['middleware' => ['permission:modules_pages_admin_blocks_list']], function () {
-            Route::get('/', 'GeekCms\Pages\Http\Controllers\AdminBlockController@index')
+            Route::get(DIRECTORY_SEPARATOR, 'GeekCms\Pages\Http\Controllers\AdminBlockController@index')
                 ->name('admin.pages.blocks')
             ;
         });

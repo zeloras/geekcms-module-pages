@@ -65,7 +65,7 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
-                        {{ url('/') }}/
+                        {{ url(DIRECTORY_SEPARATOR) }}/
                     </span>
                 </div>
                 <input class="form-control pages_admin_slug"
