@@ -2,8 +2,9 @@
 
 namespace GeekCms\Pages\Models\Validators;
 
-use Illuminate\Validation\Validator;
 use GeekCms\Pages\Models\Page;
+use Illuminate\Validation\Validator;
+use function count;
 
 class Rules extends Validator
 {
@@ -18,7 +19,7 @@ class Rules extends Validator
      */
     public function validateCheckSlug($attribute, $value, $parameters)
     {
-        $edit_id = (isset($this->data['edit_id'])) ? (int) $this->data['edit_id'] : 0;
+        $edit_id = (isset($this->data['edit_id'])) ? (int)$this->data['edit_id'] : 0;
         if (Page::PAGE_TYPE_PAGE === $this->data['type']) {
             $find_page = Page::where([
                 ['slug', $this->data['slug']],
@@ -26,7 +27,7 @@ class Rules extends Validator
                 ['type', Page::PAGE_TYPE_PAGE],
             ])->get();
 
-            if (\count($find_page)) {
+            if (count($find_page)) {
                 return null;
             }
         }
@@ -45,8 +46,8 @@ class Rules extends Validator
      */
     public function validateTranslatePage($attribute, $value, $parameters)
     {
-        $edit_id = (isset($this->data['edit_id'])) ? (int) $this->data['edit_id'] : 0;
-        $parent_id = (isset($this->data['parent_id'])) ? (int) $this->data['parent_id'] : 0;
+        $edit_id = (isset($this->data['edit_id'])) ? (int)$this->data['edit_id'] : 0;
+        $parent_id = (isset($this->data['parent_id'])) ? (int)$this->data['parent_id'] : 0;
         $lang = (isset($this->data['lang'])) ? $this->data['lang'] : config('app.locale');
 
         if ($parent_id > 0) {
@@ -62,7 +63,7 @@ class Rules extends Validator
                 ]);
             })->where([['id', '!=', $edit_id]])->get();
 
-            if (\count($find_page)) {
+            if (count($find_page)) {
                 return null;
             }
         }

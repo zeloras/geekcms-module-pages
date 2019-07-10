@@ -2,25 +2,31 @@
 
 namespace GeekCms\Pages\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App;
+use Exception;
 use GeekCms\Pages\Models\Assigns;
 use GeekCms\Pages\Models\Block;
 use GeekCms\Pages\Models\Page;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\View\View;
+use Theme;
+use function count;
 
 class AdminController extends Controller
 {
     /**
      * List all pages.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
         $pages = Page::where('type', '!=', 'trans')
             ->with(['blocks'])
-            ->get()
-        ;
+            ->get();
 
         $locales = config('laravellocalization.supportedLocales', []);
 
@@ -35,9 +41,9 @@ class AdminController extends Controller
      * Show form for edit page.
      *
      * @param Request $request
-     * @param Page    $page
+     * @param Page $page
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function form(Request $request, Page $page)
     {
@@ -63,21 +69,21 @@ class AdminController extends Controller
     /**
      * Save or create new page.
      *
-     * @param Page    $page
+     * @param Page $page
      * @param Request $request
      *
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function save(Request $request, Page $page)
     {
         $page = (!empty($page)) ? $page : new Page();
         $data = $request->all();
-        $data['lang'] = (!empty($data['lang'])) ? $data['lang'] : \App::getLocale();
-        $data['theme'] = (!empty($data['theme'])) ? $data['theme'] : \Theme::current()->name;
+        $data['lang'] = (!empty($data['lang'])) ? $data['lang'] : App::getLocale();
+        $data['theme'] = (!empty($data['theme'])) ? $data['theme'] : Theme::current()->name;
         $data['slug'] = (!empty($data['slug'])) ? $data['slug'] : $data['lang'];
-        $is_main = (bool) $data['main_page'];
+        $is_main = (bool)$data['main_page'];
         $assign_blocks_model = new Assigns($data);
 
         if ($page->fill($data) && !$page->validate($data)->fails()) {
@@ -102,9 +108,9 @@ class AdminController extends Controller
      *
      * @param Page $page
      *
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(Page $page)
     {
@@ -119,16 +125,16 @@ class AdminController extends Controller
      *
      * @param Request $request
      *
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteAll(Request $request)
     {
         $get_pages = $request->get('items', '');
         $get_pages = explode(',', $get_pages);
 
-        if (\count($get_pages)) {
+        if (count($get_pages)) {
             $find_page = Page::whereIn('id', $get_pages)->whereIn('parent_id', $get_pages);
             if ($find_page->count()) {
                 $find_page->delete();

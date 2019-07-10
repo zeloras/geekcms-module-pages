@@ -5,7 +5,7 @@
     @endif
     <div class="row">
         <div class="form-group col-6">
-            <label for="name">{{ \Translate::get('module_pages::admin/main.form.name') }}:</label>
+            <label for="name">{{ Translate::get('module_pages::admin/main.form.name') }}:</label>
             <input class="form-control pages_admin_name"
                    id="name"
                    name="name"
@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group col-6">
-            <label for="type">{{ \Translate::get('module_pages::admin/main.form.type') }}:</label>
+            <label for="type">{{ Translate::get('module_pages::admin/main.form.type') }}:</label>
             <select class="form-control pages_admin_type" id="type" name="type" required>
                 <option></option>
                 @foreach(GeekCms\Pages\Models\Page::$types as $type)
@@ -22,14 +22,14 @@
                     @php($selected = (old('type') == $type) ? 'selected' : $selected)
 
                     <option value="{{ $type }}" {{$selected}}>
-                        {{ \Translate::get("pages::admin/main.type.pages.{$type}") }}
+                        {{ Translate::get("pages::admin/main.type.pages.{$type}") }}
                     </option>
                 @endforeach
             </select>
         </div>
 
         <div class="form-group col-6">
-            <label for="lang">{{ \Translate::get('module_pages::admin/main.form.lang') }}:</label>
+            <label for="lang">{{ Translate::get('module_pages::admin/main.form.lang') }}:</label>
             <select class="form-control" id="lang" name="lang" required>
                 @foreach($locales as $locale => $lang)
                     <?php
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group col-6">
-            <label for="category">{{ \Translate::get('module_pages::admin/main.form.category') }}:</label>
+            <label for="category">{{ Translate::get('module_pages::admin/main.form.category') }}:</label>
             <select class="form-control" id="category" name="parent_id" required>
                 <option></option>
                 @foreach($categories as $pageCategory)
@@ -61,7 +61,7 @@
         </div>
 
         <div class="form-group col-6">
-            <label for="slug">{{ \Translate::get('module_pages::admin/main.form.slug') }}:</label>
+            <label for="slug">{{ Translate::get('module_pages::admin/main.form.slug') }}:</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -78,18 +78,20 @@
         </div>
 
         <div class="form-group col-6">
-            <label for="main_page">{{ \Translate::get('module_pages::admin/main.form.do_main_page') }}:</label>
+            <label for="main_page">{{ Translate::get('module_pages::admin/main.form.do_main_page') }}:</label>
             <select class="form-control" id="main_page" name="main_page">
-                <option value="0" @if ((empty($default_slug) || empty($page->slug)) && $page->slug !== $default_slug) selected="selected" @endif>{{ \Translate::get('module_pages::admin/main.form.do_main_page_no') }}</option>
-                <option value="1" @if (!empty($default_slug) && !empty($page->slug) && $page->slug === $default_slug) selected="selected" @endif>{{ \Translate::get('module_pages::admin/main.form.do_main_page_yes') }}</option>
+                <option value="0"
+                        @if ((empty($default_slug) || empty($page->slug)) && $page->slug !== $default_slug) selected="selected" @endif>{{ Translate::get('module_pages::admin/main.form.do_main_page_no') }}</option>
+                <option value="1"
+                        @if (!empty($default_slug) && !empty($page->slug) && $page->slug === $default_slug) selected="selected" @endif>{{ Translate::get('module_pages::admin/main.form.do_main_page_yes') }}</option>
             </select>
         </div>
 
         <div class="form-group col-6">
-            <label for="theme">{{ \Translate::get('module_pages::admin/main.form.theme') }}:</label>
+            <label for="theme">{{ Translate::get('module_pages::admin/main.form.theme') }}:</label>
             <select class="form-control" id="theme" name="theme" required>
                 <option></option>
-                @foreach(\Theme::all() as $theme)
+                @foreach(Theme::all() as $theme)
                     @php($selected = (isset($page) && $page->theme == $theme->name) ? 'selected': null)
                     @php($selected = (old('theme') == $theme->name) ? 'selected' : $selected)
 
@@ -101,11 +103,13 @@
         @if (count($blocks) || count($assigned))
             <div class="form-group col-12">
                 <div class="col-6 pl-0">
-                    <label for="blocks-search">{{ \Translate::get('module_pages::admin/main.form.find_blocks_for_append') }}:</label>
+                    <label for="blocks-search">{{ Translate::get('module_pages::admin/main.form.find_blocks_for_append') }}
+                        :</label>
                     <div class="typeahead-container">
                         <div class="typeahead-field">
                         <span class="typeahead-query">
-                            <input class="form-control page-blocks-search" id="blocks-search" type="text" autocomplete="off">
+                            <input class="form-control page-blocks-search" id="blocks-search" type="text"
+                                   autocomplete="off">
                         </span>
                         </div>
                     </div>
@@ -115,7 +119,7 @@
         @endif
 
         <div class="form-group col-12">
-            <label for="inputId">{{ \Translate::get('module_pages::admin/main.form.content') }}:</label>
+            <label for="inputId">{{ Translate::get('module_pages::admin/main.form.content') }}:</label>
 
             @include('pages::page.components.wysiwyg', [
                 'name' => 'content',
@@ -128,9 +132,9 @@
         <div class="form-group text-center pt-3 col-12">
             <button type="submit" class="btn btn-primary">
                 @if(isset($page))
-                    {{ \Translate::get('module_pages::admin/main.form.action_save') }}
+                    {{ Translate::get('module_pages::admin/main.form.action_save') }}
                 @else
-                    {{ \Translate::get('module_pages::admin/main.form.action_create') }}
+                    {{ Translate::get('module_pages::admin/main.form.action_create') }}
                 @endif
             </button>
         </div>
@@ -139,15 +143,18 @@
 
 <template class="page-blocks-template">
     <div class="page-blocks-template" data-elements=".page-blocks-item">
-        <section class="page-blocks-item panel panel-info %is.data.main%" data-set-index=".page-blocks-position" data-match="%data.name%-%data.id%">
+        <section class="page-blocks-item panel panel-info %is.data.main%" data-set-index=".page-blocks-position"
+                 data-match="%data.name%-%data.id%">
             <div class="card-header">
                 <div class="card-title">
                     <div class="page-blocks-switcher">
                         <div class="checkbox-toggle">
                             <input type="hidden" name="%input_group%[old_position][%id%]" value="%data.old_position%">
                             <input type="hidden" name="%input_group%[block_id][%id%]" value="%data.id%">
-                            <input type="hidden" class="page-blocks-position" name="%input_group%[position][%id%]" value="%data.position%">
-                            <input type="checkbox" value="1" name="%input_group%[enabled][%id%]" id="check-toggle-blocks-%input_group%-%id%" %is.data.enabled%>
+                            <input type="hidden" class="page-blocks-position" name="%input_group%[position][%id%]"
+                                   value="%data.position%">
+                            <input type="checkbox" value="1" name="%input_group%[enabled][%id%]"
+                                   id="check-toggle-blocks-%input_group%-%id%" %is.data.enabled%>
                             <label for="check-toggle-blocks-%input_group%-%id%"></label>
                         </div>
                     </div>
@@ -165,7 +172,7 @@
 
 @push('script')
     <script>
-        var pages_blocks_list = @json($blocks);
-        var page_blocks_list_enabled = @json($assigned);
+        var pages_blocks_list = '@json($blocks)';
+        var page_blocks_list_enabled = '@json($assigned)';
     </script>
 @endpush

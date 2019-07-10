@@ -3,10 +3,14 @@
 namespace GeekCms\Pages\Models\db;
 
 use App\Models\MainModel;
-use Illuminate\Validation\Rule;
 use GeekCms\Pages\Models\Assigns;
 use GeekCms\Pages\Models\Block;
 use GeekCms\Pages\Models\Page as MainPageModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Validation\Rule;
+use Translate;
 
 class Page extends MainModel
 {
@@ -83,8 +87,8 @@ class Page extends MainModel
      */
     public function fill(array $attributes)
     {
-        $this->messages = ['*.check_slug' => \Translate::get('module_pages::admin/validate.check_slug')];
-        $this->messages = ['*.translate_page' => \Translate::get('module_pages::admin/validate.check_translate_duplicate')];
+        $this->messages = ['*.check_slug' => Translate::get('module_pages::admin/validate.check_slug')];
+        $this->messages = ['*.translate_page' => Translate::get('module_pages::admin/validate.check_translate_duplicate')];
         $this->rules['type'][] = Rule::in(self::$types);
 
         return parent::fill($attributes);
@@ -93,7 +97,7 @@ class Page extends MainModel
     /**
      * Blocks.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function blocks()
     {
@@ -113,7 +117,7 @@ class Page extends MainModel
     /**
      * Parent elements.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function parent()
     {
@@ -123,7 +127,7 @@ class Page extends MainModel
     /**
      * Child elements.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function children()
     {

@@ -6,6 +6,8 @@ use App\Models\MainModel;
 use GeekCms\Pages\Models\Assigns;
 use GeekCms\Pages\Models\Block;
 use GeekCms\Pages\Models\Page;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Variable extends MainModel
 {
@@ -43,7 +45,7 @@ class Variable extends MainModel
     /**
      * Relation for block.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function block()
     {
@@ -53,7 +55,7 @@ class Variable extends MainModel
     /**
      * Relation for pages.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function page()
     {

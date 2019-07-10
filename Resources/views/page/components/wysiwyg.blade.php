@@ -1,11 +1,12 @@
-@php($name = $name ?? 'wysiwyg-content')
-@php($id = $id ?? 'wysiwyg')
-@php($class = $class ?? 'wysiwyg-edit')
-@php($attributes = $attributes ?? null)
-@php($content = $content ?? null)
-@php($height = $height ?? 600)
-
 <?php
+$name = $name ?? 'wysiwyg-content';
+$id = $id ?? 'wysiwyg';
+$class = $class ?? 'wysiwyg-edit';
+$attributes = $attributes ?? null;
+$content = $content ?? null;
+$height = $height ?? 600;
+
+
 $options = (isset($options) && is_array($options))
     ? $options
     : [
@@ -19,7 +20,8 @@ $options = (isset($options) && is_array($options))
 @endpush
 
 @push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css">
 
     <link rel="stylesheet" href="{{ theme_url('css/editor.css') }}">
@@ -62,7 +64,7 @@ $options = (isset($options) && is_array($options))
                     c = c.replace(/%20/gm, ' ');
 
 
-                    $(txtCode).val(c)
+                    $(txtCode).val(c);
 
                     txtCode.keyup(function (e) {
                         var content = $(this).val();

@@ -3,8 +3,8 @@
 namespace GeekCms\Pages\Providers;
 
 use GeekCms\PackagesManager\Support\ServiceProvider as MainServiceProvider;
-use Illuminate\Support\Facades\Blade;
 use GeekCms\Pages\Models\Block;
+use Illuminate\Support\Facades\Blade;
 
 /**
  * Class InitServiceProvider.
@@ -24,6 +24,8 @@ class InitServiceProvider extends MainServiceProvider
             if ($block) {
                 return $block->content_compile;
             }
+
+            return null;
         });
     }
 

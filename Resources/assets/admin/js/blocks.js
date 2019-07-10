@@ -38,7 +38,7 @@ var modulePagesBlocksAdmin = {
         if (item.length && action && find_id && find_id.length && find_id.val().length) {
             let xhr = new XMLHttpRequest();
 
-            xhr.onload = xhr.onerror = function() {
+            xhr.onload = xhr.onerror = function () {
                 item.parents(config.line).remove();
                 self.hideButtons();
             };
@@ -121,7 +121,7 @@ var modulePagesBlocksAdmin = {
 
         $(config.button + ':last').removeClass('hidden');
         $(config.button + ':not(:last)').addClass('hidden');
-         $(config.remove + ':not(:last)').removeClass('hidden');
+        $(config.remove + ':not(:last)').removeClass('hidden');
 
         if ($(config.remove).length <= 2) {
             $(config.remove + ':last').addClass('hidden');

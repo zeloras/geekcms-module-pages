@@ -4,6 +4,8 @@ namespace GeekCms\Pages\Models;
 
 use App\Models\MainModel;
 use GeekCms\Pages\Models\db\Assigns as DBModel;
+use function count;
+use function in_array;
 
 class Assigns extends DBModel
 {
@@ -47,7 +49,7 @@ class Assigns extends DBModel
 
         foreach ($lists as $type_list => $data_list) {
             foreach ($data_list as $key_edit => $data_val) {
-                if (0 === (int) $data_val) {
+                if (0 === (int)$data_val) {
                     if ('edit' === $type_list) {
                         foreach ($current->model_data_edit as $mde_key => $mde_val) {
                             unset($current->model_data_edit[$mde_key][$key_edit]);
@@ -73,8 +75,8 @@ class Assigns extends DBModel
                 ])->first();
 
                 if ($update_variable) {
-                    $update_variable->enabled = (bool) $current->enabled;
-                    $update_variable->position = (int) $current->position;
+                    $update_variable->enabled = (bool)$current->enabled;
+                    $update_variable->position = (int)$current->position;
                     $update_variable->save();
                 } else {
                     $model_save = new $current($current->attributes);
@@ -88,10 +90,10 @@ class Assigns extends DBModel
             $assigns = data_get($current->pages_model, 'assigns', null);
             $removes = [];
 
-            if (mb_strlen($value) < 1 || \count($assigns) > \count($lists['block_id'])) {
-                if (\count($assigns) > \count($lists['block_id'])) {
+            if (mb_strlen($value) < 1 || count($assigns) > count($lists['block_id'])) {
+                if (count($assigns) > count($lists['block_id'])) {
                     foreach ($assigns as $assign) {
-                        if (!\in_array($assign->block_id, $lists['block_id'], true)) {
+                        if (!in_array($assign->block_id, $lists['block_id'], true)) {
                             $removes[$assign->id] = $assign->id;
                         }
                     }

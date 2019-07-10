@@ -3,13 +3,13 @@
 }
 
 .page-blocks-sortable {
-    border: 1px dashed rgba(0,0,0, 0.5);
+    border: 1px dashed rgba(0, 0, 0, 0.5);
     padding: 10px 10px 5px 10px;
     margin-top: 10px;
 }
 
 .page-blocks-item {
-    border: 1px solid rgba(0,0,0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     margin-bottom: 5px;
     cursor: grabbing;

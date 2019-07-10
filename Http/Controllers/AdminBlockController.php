@@ -2,10 +2,16 @@
 
 namespace GeekCms\Pages\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Exception;
 use GeekCms\Pages\Models\Block;
 use GeekCms\Pages\Models\Variable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\View\View;
+use function count;
+use function is_array;
 
 class AdminBlockController extends Controller
 {
@@ -14,7 +20,7 @@ class AdminBlockController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index(Request $request)
     {
@@ -31,9 +37,9 @@ class AdminBlockController extends Controller
      * Show form for create new block with variables.
      *
      * @param Request $request
-     * @param Block   $block
+     * @param Block $block
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create(Request $request, Block $block)
     {
@@ -50,10 +56,10 @@ class AdminBlockController extends Controller
     /**
      * Show form for edit blocks.
      *
-     * @param Block   $block
+     * @param Block $block
      * @param Request $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit(Request $request, Block $block)
     {
@@ -74,16 +80,16 @@ class AdminBlockController extends Controller
      * Update or create block with variable.
      *
      * @param null|Block $block
-     * @param Request    $request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function save(Request $request, Block $block)
     {
         $variables = $this->splitFormArray($request->post('variable', []));
 
         $block = ($block && !empty($block)) ? $block : new Block();
-        $current_id = (int) $request->post('current_id', 0);
+        $current_id = (int)$request->post('current_id', 0);
         if ($current_id) {
             $find_parent = Block::where('id', $current_id)->first();
             $parent_name = ($find_parent && $find_parent->id) ? $find_parent->name : $request->post('name', '');
@@ -92,7 +98,7 @@ class AdminBlockController extends Controller
         }
 
         $data_fill = $request->except(['variable', 'current_id']);
-        $data_fill['parent_id'] = (isset($data_fill['parent_id'])) ? (int) $data_fill['parent_id'] : 0;
+        $data_fill['parent_id'] = (isset($data_fill['parent_id'])) ? (int)$data_fill['parent_id'] : 0;
         $data_fill['name'] = (0 === $data_fill['parent_id']) ? $data_fill['name'] : $parent_name;
 
         if ($block->fill($data_fill) && !$block->validate($data_fill)->fails()) {
@@ -122,14 +128,36 @@ class AdminBlockController extends Controller
     }
 
     /**
+     * Build array from request multidata form.
+     *
+     * @param $formArray
+     *
+     * @return array
+     */
+    protected function splitFormArray($formArray)
+    {
+        $result = [];
+
+        if (is_array($formArray)) {
+            foreach ($formArray as $key => $data) {
+                foreach ($data as $k => $value) {
+                    $result[$k][$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Delete block.
      *
-     * @param Block   $block
+     * @param Block $block
      * @param Request $request
      *
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Block $block, Request $request)
     {
@@ -144,16 +172,16 @@ class AdminBlockController extends Controller
      *
      * @param Request $request
      *
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteAll(Request $request)
     {
         $get_blocks = $request->get('items', '');
         $get_blocks = explode(',', $get_blocks);
 
-        if (\count($get_blocks)) {
+        if (count($get_blocks)) {
             $find_block = Block::whereIn('id', $get_blocks);
             if ($find_block->count()) {
                 foreach ($find_block->get() as $fblock) {
@@ -170,11 +198,11 @@ class AdminBlockController extends Controller
      * Delete variable.
      *
      * @param Variable $var
-     * @param Request  $request
+     * @param Request $request
      *
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws Exception
      *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function varDestroy(Variable $var, Request $request)
     {
@@ -185,27 +213,5 @@ class AdminBlockController extends Controller
         return redirect()->route('admin.pages.blocks.edit', [
             'block' => $id,
         ]);
-    }
-
-    /**
-     * Build array from request multidata form.
-     *
-     * @param $formArray
-     *
-     * @return array
-     */
-    protected function splitFormArray($formArray)
-    {
-        $result = [];
-
-        if (\is_array($formArray)) {
-            foreach ($formArray as $key => $data) {
-                foreach ($data as $k => $value) {
-                    $result[$k][$key] = $value;
-                }
-            }
-        }
-
-        return $result;
     }
 }

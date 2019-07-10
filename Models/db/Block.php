@@ -3,9 +3,11 @@
 namespace GeekCms\Pages\Models\db;
 
 use App\Models\MainModel;
-use Illuminate\Validation\Rule;
 use GeekCms\Pages\Models\Block as MainBlockModel;
 use GeekCms\Pages\Models\Variable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Validation\Rule;
 
 class Block extends MainModel
 {
@@ -58,14 +60,16 @@ class Block extends MainModel
             ])->first();
 
             if (!empty($find)) {
-                $fail($attribute.' not unique');
+                $fail($attribute . ' not unique');
             }
         };
 
         $this->rules['parent_id'][] = function ($attribute, $value, $fail) {
-            if (empty($value) && 0 !== (int) $value) {
+            if (empty($value) && 0 !== (int)$value) {
                 return Rule::exists('page_blocks', 'id');
             }
+
+            return null;
         };
 
         parent::__construct($attributes);
@@ -74,7 +78,7 @@ class Block extends MainModel
     /**
      * Get block variables.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function variables()
     {
@@ -84,7 +88,7 @@ class Block extends MainModel
     /**
      * Children elements.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function children()
     {
@@ -94,7 +98,7 @@ class Block extends MainModel
     /**
      * Parent elements.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function parent()
     {

@@ -2,8 +2,12 @@
 
 namespace GeekCms\Pages\Models;
 
+use App;
 use App\Models\MainModel;
+use Exception;
 use GeekCms\Pages\Models\db\Block as DBModel;
+use Illuminate\Support\Collection;
+use function count;
 
 class Block extends DBModel
 {
@@ -27,57 +31,10 @@ class Block extends DBModel
     ];
 
     /**
-     * Template compilation mutator.
-     *
-     * @throws \Exception
-     *
-     * @return string
-     */
-    public function getContentCompileAttribute()
-    {
-        return app('blade.compiler')->compileWiths(
-            array_get($this->attributes, 'content'),
-            $this->getVariables()
-        );
-    }
-
-    /**
-     * Mutator for content.
-     *
-     * @return null|string|string[]
-     */
-    public function getContentAttribute()
-    {
-        $content = (isset($this->attributes['content'])) ? $this->attributes['content'] : '';
-
-        $regex = '/(?<block>\{\{.*theme_url\([\'|"](?<attach>\S+)[\'|"]\).*\}\})/m';
-
-        $content = preg_replace_callback($regex, function ($matches) {
-            if ($attach = array_get($matches, 'attach')) {
-                return theme_url($attach);
-            }
-        }, $content);
-
-        return $content;
-    }
-
-    public function getVariables()
-    {
-        $variables = $this->variables;
-        $result = [];
-
-        foreach ($variables as $variable) {
-            $result[$variable->key] = $variable->value;
-        }
-
-        return $result;
-    }
-
-    /**
      * Prepare array with active blocks on current page.
      *
      * @param null|MainModel $model
-     * @param bool           $current
+     * @param bool $current
      *
      * @return array
      */
@@ -89,14 +46,14 @@ class Block extends DBModel
             $get_sort = $model->assigns()->orderBy('position', 'asc')->get();
             foreach ($get_sort as $assign) {
                 if ($assign->block) {
-                    $blocks[(int) $assign->position] = [
+                    $blocks[(int)$assign->position] = [
                         'id' => $assign->block->id,
-                        'name' => $assign->block->name.' ('.$assign->block->lang.')',
+                        'name' => $assign->block->name . ' (' . $assign->block->lang . ')',
                         'content' => $assign->block->content,
                         'content_compile' => $assign->block->content_compile,
                         'position' => $assign->position,
                         'old_position' => $assign->old_position,
-                        'enabled' => (bool) $assign->enabled,
+                        'enabled' => (bool)$assign->enabled,
                         'page_id' => $assign->page_id,
                         'block_id' => $assign->block->id,
                     ];
@@ -110,8 +67,8 @@ class Block extends DBModel
     /**
      * Sort blocks by position for view.
      *
-     * @param array  $blocks
-     * @param bool   $current
+     * @param array $blocks
+     * @param bool $current
      * @param string $main_content
      *
      * @return array
@@ -121,7 +78,7 @@ class Block extends DBModel
         $free_key = -1;
 
         // For find free key, for find current page block position
-        if (\count($blocks)) {
+        if (count($blocks)) {
             $max_key = max(array_keys($blocks)) + 1;
             for ($min_key = 0; $min_key <= $max_key; ++$min_key) {
                 if (!isset($blocks[$min_key]) && $free_key < 0) {
@@ -133,7 +90,7 @@ class Block extends DBModel
         // For put current page block array
         if ($current) {
             if ($free_key >= 0) {
-                $blocks[(int) $free_key] = $main_content;
+                $blocks[(int)$free_key] = $main_content;
             } else {
                 $blocks[] = $main_content;
             }
@@ -154,12 +111,12 @@ class Block extends DBModel
         $blocks = [];
         $blocks_list = self::all();
 
-        if ($blocks_list && \count($blocks_list)) {
+        if ($blocks_list && count($blocks_list)) {
             foreach ($blocks_list as $item) {
                 $blocks[] = self::$blocks_list_data;
                 end($blocks);
                 $key = key($blocks);
-                $blocks[$key]['name'] = $item->name.' ('.$item->lang.')';
+                $blocks[$key]['name'] = $item->name . ' (' . $item->lang . ')';
                 $blocks[$key]['content'] = $item->content;
                 $blocks[$key]['content_compile'] = $item->content_compile;
                 $blocks[$key]['block_id'] = $item->id;
@@ -183,41 +140,9 @@ class Block extends DBModel
     }
 
     /**
-     * Get available translates.
-     *
-     * @param null|array $pluck
-     *
-     * @return array|\Illuminate\Support\Collection
-     */
-    public function getAvailableTranslates($pluck = null)
-    {
-        $return = [];
-        $root = ($this->parent_id) ? false : true;
-        $start_lang = (!empty($this->lang)) ? $this->lang : \App::getLocale();
-
-        $model = ($root) ? $this : $this->parent;
-        $items = $model->children;
-        $items->push($model);
-
-        foreach ($items as $item_key => $item_val) {
-            if (empty($item_val->lang)) {
-                $items[$item_key]->lang = $start_lang;
-            }
-        }
-
-        $return = $items;
-
-        if (!empty($pluck)) {
-            $return = $items->pluck($pluck)->toArray();
-        }
-
-        return $return;
-    }
-
-    /**
      * Get block tabs.
      *
-     * @param null|Block $block
+     * @param self $block
      *
      * @return array
      */
@@ -244,5 +169,84 @@ class Block extends DBModel
         }
 
         return $tabs;
+    }
+
+    /**
+     * Get available translates.
+     *
+     * @param null|array $pluck
+     *
+     * @return array|Collection
+     */
+    public function getAvailableTranslates($pluck = null)
+    {
+        $start_lang = (!empty($this->lang)) ? $this->lang : App::getLocale();
+
+        $model = (($this->parent_id) ? false : true) ? $this : $this->parent;
+        $items = $model->children;
+        $items->push($model);
+
+        foreach ($items as $item_key => $item_val) {
+            if (empty($item_val->lang)) {
+                $items[$item_key]->lang = $start_lang;
+            }
+        }
+
+        $return = $items;
+
+        if (!empty($pluck)) {
+            $return = $items->pluck($pluck)->toArray();
+        }
+
+        return $return;
+    }
+
+    /**
+     * Template compilation mutator.
+     *
+     * @return string
+     * @throws Exception
+     *
+     */
+    public function getContentCompileAttribute()
+    {
+        return app('blade.compiler')->compileWiths(
+            array_get($this->attributes, 'content'),
+            $this->getVariables()
+        );
+    }
+
+    public function getVariables()
+    {
+        $variables = $this->variables;
+        $result = [];
+
+        foreach ($variables as $variable) {
+            $result[$variable->key] = $variable->value;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Mutator for content.
+     *
+     * @return null|string|string[]
+     */
+    public function getContentAttribute()
+    {
+        $content = (isset($this->attributes['content'])) ? $this->attributes['content'] : '';
+
+        $regex = '/(?<block>\{\{.*theme_url\([\'|"](?<attach>\S+)[\'|"]\).*\}\})/m';
+
+        $content = preg_replace_callback($regex, function ($matches) {
+            if ($attach = array_get($matches, 'attach')) {
+                return theme_url($attach);
+            }
+
+            return null;
+        }, $content);
+
+        return $content;
     }
 }
