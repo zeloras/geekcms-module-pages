@@ -101,6 +101,8 @@ var modulePagesAdmin = {
         }
 
         if (window.hasOwnProperty('pages_blocks_list') && pages_blocks_list.length) {
+            pages_blocks_list = (['array', 'object'].indexOf(typeof pages_blocks_list) === -1) ? JSON.parse(pages_blocks_list) : pages_blocks_list;
+
             $(config.page_blocks_search).typeahead({
                 input: config.page_blocks_search,
                 order: "asc",

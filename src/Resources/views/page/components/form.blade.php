@@ -22,7 +22,7 @@
                     @php($selected = (old('type') == $type) ? 'selected' : $selected)
 
                     <option value="{{ $type }}" {{$selected}}>
-                        {{ Translate::get("pages::admin/main.type.pages.{$type}") }}
+                        {{ Translate::get("module_pages::admin/main.type.pages.{$type}") }}
                     </option>
                 @endforeach
             </select>

@@ -63,6 +63,8 @@ var modulePagesBlocksAdmin = {
      */
     loadConfig: function (pageblocks_list_admin) {
         let self = this;
+        pageblocks_list_admin = (['array', 'object'].indexOf(typeof pageblocks_list_admin) === -1) ? JSON.parse(pageblocks_list_admin) : pageblocks_list_admin;
+
 
         if (pageblocks_list_admin) {
             for (let key in pageblocks_list_admin) {

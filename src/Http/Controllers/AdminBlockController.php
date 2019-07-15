@@ -25,7 +25,11 @@ class AdminBlockController extends Controller
     public function index(Request $request)
     {
         $blocks = Block::getMainBlocksList();
-        $locales = config('laravellocalization.supportedLocales', []);
+        try {
+            $locales = getSupportedLocales();
+        } catch (Exception $e) {
+            $locales = [];
+        }
 
         return view('pages::block.index', [
             'blocks' => $blocks,
@@ -44,7 +48,11 @@ class AdminBlockController extends Controller
     public function create(Request $request, Block $block)
     {
         $blocks_list = Block::getMainBlocksList();
-        $locales = config('laravellocalization.supportedLocales', []);
+        try {
+            $locales = getSupportedLocales();
+        } catch (Exception $e) {
+            $locales = [];
+        }
 
         return view('pages::block.create', [
             'block' => $block ?? null,
@@ -65,7 +73,11 @@ class AdminBlockController extends Controller
     {
         $block_has = object_get($block, 'id', null);
         $blocks_list = Block::getMainBlocksList();
-        $locales = config('laravellocalization.supportedLocales', []);
+        try {
+            $locales = getSupportedLocales();
+        } catch (Exception $e) {
+            $locales = [];
+        }
         $tabs = (!empty($block_has)) ? Block::getBlocksTabs($block) : [];
 
         return view('pages::block.edit', [

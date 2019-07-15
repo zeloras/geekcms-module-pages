@@ -60,7 +60,7 @@
                 </ul>
             </td>
             <td class="color-blue">
-                {{ Translate::get("pages::admin/main.type.pages.{$page->type}") }}
+                {{ Translate::get("module_pages::admin/main.type.pages.{$page->type}") }}
             </td>
             <td class="table-date">
                 {{ $page->updated_at }} <i class="font-icon font-icon-clock"></i>

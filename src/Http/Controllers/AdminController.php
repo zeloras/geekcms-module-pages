@@ -28,7 +28,11 @@ class AdminController extends Controller
             ->with(['blocks'])
             ->get();
 
-        $locales = config('laravellocalization.supportedLocales', []);
+        try {
+            $locales = getSupportedLocales();
+        } catch (Exception $e) {
+            $locales = [];
+        }
 
         return view('pages::page.index', [
             'pages' => $pages,
@@ -49,11 +53,15 @@ class AdminController extends Controller
     {
         $page_has = object_get($page, 'id', null);
         $view = (!empty($page_has)) ? 'pages::page.edit' : 'pages::page.create';
-        $locales = config('laravellocalization.supportedLocales', []);
         $tabs = (!empty($page_has)) ? Page::getPageTabs($page) : [];
         $categories = Page::getPagesList();
         $blocks = Block::formatBlocks();
         $assigned = Block::formatBlocksAssigned($page, true);
+        try {
+            $locales = getSupportedLocales();
+        } catch (Exception $e) {
+            $locales = [];
+        }
 
         return view($view, [
             'page' => $page ?? null,
