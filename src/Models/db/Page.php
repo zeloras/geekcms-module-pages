@@ -87,8 +87,10 @@ class Page extends MainModel
      */
     public function fill(array $attributes)
     {
-        $this->messages['*.check_slug'] = Translate::get('module_pages::admin/validate.check_slug');
-        $this->messages['*.translate_page'] = Translate::get('module_pages::admin/validate.check_translate_duplicate');
+        if (class_exists('Translate')) {
+            $this->messages['*.check_slug'] = Translate::get('module_pages::admin/validate.check_slug');
+            $this->messages['*.translate_page'] = Translate::get('module_pages::admin/validate.check_translate_duplicate');
+        }
         $this->rules['type'][] = Rule::in(self::$types);
 
         return parent::fill($attributes);
