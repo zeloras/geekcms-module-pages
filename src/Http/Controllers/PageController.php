@@ -13,7 +13,8 @@ class PageController extends Controller
 {
     public function open(Request $request, $page = null)
     {
-        $page = (empty($page) && DIRECTORY_SEPARATOR === $request->getRequestUri()) ? Page::getDefaultSlug() : $page;
+        $page = (empty($page) || DIRECTORY_SEPARATOR === $request->getRequestUri()) ? Page::getDefaultSlug() : $page;
+
         // Get page language
         $page_language = $request->route()->getPrefix();
         $page_language = (empty($page_language)) ? config('app.locale') : $page_language;
