@@ -5,13 +5,11 @@
     <div class="tab-content" id="blockContentTab">
         <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">
             <div class="row">
-                @if (isset($block) && empty($block->parent_id))
-                    <div class="form-group col-12">
-                        <label for="name">{{ Translate::get('module_pages::admin/main.list.block.page_block_name') }}
-                            :</label>
-                        <input class="form-control" id="name" name="name" value="{{ old('name',$block->name ?? '') }}">
-                    </div>
-                @endif
+                <div class="form-group col-12">
+                    <label for="name">{{ Translate::get('module_pages::admin/main.list.block.page_block_name') }}
+                        :</label>
+                    <input class="form-control" id="name" name="name" value="{{ old('name',$block->name ?? '') }}">
+                </div>
 
                 <div class="form-group col-6">
                     <label for="lang">{{ Translate::get('module_pages::admin/main.form.lang') }}:</label>

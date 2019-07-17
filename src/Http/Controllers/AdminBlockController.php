@@ -110,8 +110,8 @@ class AdminBlockController extends Controller
         }
 
         $data_fill = $request->except(['variable', 'current_id']);
-        $data_fill['parent_id'] = (isset($data_fill['parent_id'])) ? (int)$data_fill['parent_id'] : 0;
-        $data_fill['name'] = (0 === $data_fill['parent_id']) ? $data_fill['name'] : $parent_name;
+        $data_fill['parent_id'] = (int) array_get($data_fill, 'parent_id', 0);
+        $data_fill['name'] = (0 === $data_fill['parent_id']) ? array_get($data_fill, 'name') : $parent_name;
 
         if ($block->fill($data_fill) && !$block->validate($data_fill)->fails()) {
             $block->save();
@@ -121,16 +121,25 @@ class AdminBlockController extends Controller
 
         // variables save
         foreach ($variables as $variable) {
-            if (array_get($variable, 'key')) {
-                Variable::updateOrCreate([
-                    'block_id' => $block->id,
-                    'key' => array_get($variable, 'key'),
-                ], [
-                    'block_id' => $block->id,
-                    'key' => array_get($variable, 'key'),
-                    'type' => array_get($variable, 'type'),
-                    'value' => array_get($variable, 'value'),
-                ]);
+            $get_key = array_get($variable, 'key');
+            $old_id = array_get($variable, 'uid');
+
+            if ($get_key || $old_id) {
+                if ($get_key) {
+                    Variable::updateOrCreate([
+                        'block_id' => $block->id,
+                        'key' => array_get($variable, 'key'),
+                    ], [
+                        'block_id' => $block->id,
+                        'key' => array_get($variable, 'key'),
+                        'type' => array_get($variable, 'type'),
+                        'value' => array_get($variable, 'value'),
+                    ]);
+                } elseif (!$get_key && $old_id) {
+                    Variable::where([
+                        ['id', '=', $old_id],
+                    ])->delete();
+                }
             }
         }
 
